@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'lil-gui'
+// import * as dat from 'lil-gui'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 /**
  * Base
  */
 // Debug
-const gui = new dat.GUI()
+// const gui = new dat.GUI()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -17,6 +18,30 @@ const scene = new THREE.Scene()
 // Fog
 const fog = new THREE.Fog('#262837', 1, 15)
 scene.fog = fog
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+// const sampleLoader = new GLTFLoader();
+
+// sampleLoader.load(
+//   'scene.gltf',
+//   function (gltf) {
+//     const model = gltf.scene
+//     const stone1 = model.
+//     // stone1.scale.set(0.5, 0.5, 0.5)
+//     // model.position.set(0, 0, 0)
+//     scene.add(stone1)
+//   }
+// );
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 /**
  * Textures
@@ -105,6 +130,7 @@ scene.add(house)
     })
   )
   door.geometry.setAttribute('uv2', new THREE.Float32BufferAttribute(door.geometry.attributes.uv.array, 2))
+  door.material.roughness = 0.9
   door.position.y = 1
   door.position.z = 2 + 0.01
   house.add(door)
@@ -167,7 +193,7 @@ scene.add(house)
   const graveMaterial = new THREE.MeshStandardMaterial({ color: '#b2b6b1' });
   const gravePositions = []; // Array para armazenar as posições das grades
 
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 40; i++) {
     let positionValid = false
     let x, z
 
@@ -195,10 +221,8 @@ scene.add(house)
     const grave = new THREE.Mesh(graveGeometry, graveMaterial)
 
     grave.position.set(x, 0.3, z)
-
     grave.rotation.z = (Math.random() - 0.5) * 0.4
     grave.rotation.y = (Math.random() - 0.5) * 0.4
-
     grave.castShadow = true
 
     graves.add(grave)
@@ -207,7 +231,7 @@ scene.add(house)
 
 // Floor
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(20, 20),
+    new THREE.PlaneGeometry(25, 25),
     new THREE.MeshStandardMaterial({
       map: grassColorTexture,
       aoMap: grassAmbientOcclusionTexture,
@@ -224,12 +248,12 @@ scene.add(floor)
  * Lights
  */
 // Ambient light
-const ambientLight = new THREE.AmbientLight('#b9d5ff', 0.05)
-gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
+const ambientLight = new THREE.AmbientLight('#b9d5ff', 0.09)
+// gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
 
 // Directional light
-const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.05)
+const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.09)
 moonLight.position.set(4, 5, - 2)
 // gui.add(moonLight, 'intensity').min(0).max(1).step(0.001)
 // gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001)
@@ -281,14 +305,21 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 5
-camera.position.y = 2
-camera.position.z = 6
+camera.position.set(5, 2, 6)
+camera.lookAt(0, 0, 0)
+
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+
+controls.minDistance = 4
+controls.maxDistance = 10
+
+controls.minPolarAngle = Math.PI / 4
+controls.maxPolarAngle = Math.PI / 2.1
+
 
 /**
  * Renderer
@@ -359,7 +390,6 @@ const tick = () =>
     ghost3.position.x = Math.cos(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.32))
     ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.5))
     ghost3.position.y = Math.sin(ghost3Angle * 5) + Math.sin(elapsedTime * 2)
-
 
 
     // Update controls
