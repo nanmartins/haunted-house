@@ -315,7 +315,7 @@ const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 
 controls.minDistance = 4
-controls.maxDistance = 10
+controls.maxDistance = 12
 
 controls.minPolarAngle = Math.PI / 4
 controls.maxPolarAngle = Math.PI / 2.1
