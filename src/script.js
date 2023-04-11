@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-// import * as dat from 'lil-gui'
+import * as dat from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 /**
  * Base
  */
 // Debug
-// const gui = new dat.GUI()
+const gui = new dat.GUI()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -20,33 +20,51 @@ const fog = new THREE.Fog('#262837', 1, 15)
 scene.fog = fog
 
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-// const sampleLoader = new GLTFLoader();
-
-// sampleLoader.load(
-//   'scene.gltf',
-//   function (gltf) {
-//     const model = gltf.scene
-//     const stone1 = model.
-//     // stone1.scale.set(0.5, 0.5, 0.5)
-//     // model.position.set(0, 0, 0)
-//     scene.add(stone1)
-//   }
-// );
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
+
+const gltfLoader = new GLTFLoader()
+
+let cartModel = null
+gltfLoader.load(
+  '/medievalCart/scene.gltf',
+  (gltf) => {
+    cartModel = gltf.scene
+    cartModel.scale.set(0.5, 0.5, 0.5)
+    cartModel.position.set(- 1, 0, 2.2)
+    cartModel.rotation.y = -1
+    // cartModel.rotation.x = 0.2
+    // console.log(cartModel)
+    scene.add(cartModel)
+  }
+)
+
+let houseModel = null
+gltfLoader.load(
+  '/medievalHouse/scene.gltf',
+  (gltf) => {
+    houseModel = gltf.scene
+    houseModel.scale.set(0.85, 0.85, 0.85)
+    houseModel.position.x = 1
+    houseModel.rotation.y = Math.PI * 0.5
+    scene.add(houseModel)
+    // console.log(houseModel)
+  }
+)
+
+let realBush = null
+gltfLoader.load(
+  '/realBush/scene.gltf',
+  (gltf) => {
+    realBush = gltf.scene
+    realBush.position.set(3, 0, 3)
+    realBush.scale.set(0.007, 0.007, 0.007)
+    scene.add(realBush)
+    console.log(realBush)
+  }
+)
 
 // door
 const doorColorTexture = textureLoader.load('/textures/door/color.jpg')
@@ -89,7 +107,7 @@ grassRoughnessTexture.wrapT = THREE.RepeatWrapping
  * House
  */
 const house = new THREE.Group()
-scene.add(house)
+// scene.add(house)
 
   // walls
   const walls = new THREE.Mesh(
@@ -155,7 +173,7 @@ scene.add(house)
   bush4.scale.set(0.15, 0.15, 0.15)
   bush4.position.set(- 1, 0.05, 2.6)
 
-  house.add(bush1, bush2, bush3, bush4)
+  // house.add(bush1, bush2, bush3, bush4)
 
                                   /// Lesson Code ///
   /////// Graves ///////
@@ -193,7 +211,7 @@ scene.add(house)
   const graveMaterial = new THREE.MeshStandardMaterial({ color: '#b2b6b1' });
   const gravePositions = []; // Array para armazenar as posições das grades
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 30; i++) {
     let positionValid = false
     let x, z
 
@@ -248,12 +266,12 @@ scene.add(floor)
  * Lights
  */
 // Ambient light
-const ambientLight = new THREE.AmbientLight('#b9d5ff', 0.09)
+const ambientLight = new THREE.AmbientLight('#b9d5ff', 0.08)
 // gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
 
 // Directional light
-const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.09)
+const moonLight = new THREE.DirectionalLight('#b9d5ff', 0.08)
 moonLight.position.set(4, 5, - 2)
 // gui.add(moonLight, 'intensity').min(0).max(1).step(0.001)
 // gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001)
@@ -263,8 +281,14 @@ scene.add(moonLight)
 
 // Door light
 const doorLight = new THREE.PointLight('#ff7d46', 1, 7)
-doorLight.position.set(0,  2.2, 2.7)
-house.add(doorLight)
+doorLight.position.set(0, 2.8, 1.35)
+console.log(doorLight.position)
+scene.add(doorLight)
+
+// const pointLightHelper = new THREE.PointLightHelper(doorLight, 0.2)
+// scene.add(pointLightHelper)
+
+// gui.add(doorLight, 'position').min(-1).max(1).step(0.1)
 
 // Ghosts
 const ghost1 = new THREE.PointLight('#ff00ff', 2, 3)
@@ -305,8 +329,8 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(5, 2, 6)
-camera.lookAt(0, 0, 0)
+camera.position.set(-4, 3.5, 6)
+// camera.lookAt(0, 0, 0)
 
 scene.add(camera)
 

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Medieval Cart
+* source:	https://sketchfab.com/3d-models/medieval-cart-5388ccf5011646d8ba0ae9e58e7ba777
+* author:	sch0i (https://sketchfab.com/sch0i)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Medieval Cart" (https://sketchfab.com/3d-models/medieval-cart-5388ccf5011646d8ba0ae9e58e7ba777) by sch0i (https://sketchfab.com/sch0i) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
