@@ -46,7 +46,7 @@ gltfLoader.load(
   '/medievalHouse/scene.gltf',
   (gltf) => {
     houseModel = gltf.scene
-    houseModel.scale.set(0.85, 0.85, 0.85)
+    houseModel.scale.set(0.82, 0.82, 0.82)
     houseModel.position.x = 1
     houseModel.rotation.y = Math.PI * 0.5
     scene.add(houseModel)
@@ -403,7 +403,7 @@ const tick = () =>
     const ghost1Angle = elapsedTime * 0.5
     ghost1.position.x = Math.cos(ghost1Angle) * 4
     ghost1.position.z = Math.sin(ghost1Angle) * 4
-    ghost1.position.y = Math.sin(ghost1Angle * 3)
+    ghost1.position.y = Math.sin(ghost1Angle) * 2
 
     const ghost2Angle = - elapsedTime * 0.3
     ghost2.position.x = Math.cos(ghost2Angle) * 3
